@@ -82,6 +82,9 @@ BookStore is a Django application that allows users to register, log in, and man
 - **Login:** `/accounts/login/` (POST)
     - Request: `{ "username": "user", "password": "pass" }`
     - Response: `{ "token": "your-auth-token" }`
+ 
+- **Logout:** `/accounts/logout/` (POST)
+    - Response: `{ "message": "Logout successful" }`
 
 ### Books
 
