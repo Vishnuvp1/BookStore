@@ -10,10 +10,12 @@ from .serializers import UserSerializer
 
 User = get_user_model()
 
+
 class RegisterView(generics.CreateAPIView):
     """
     API view to register a new user.
     """
+
     queryset = User.objects.all()
     permission_classes = (permissions.AllowAny,)
     serializer_class = UserSerializer
@@ -21,17 +23,18 @@ class RegisterView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save() 
+        serializer.save()
 
         return Response(
             {"message": "User created successfully"}, status=status.HTTP_201_CREATED
-        ) 
+        )
 
 
 class LoginView(APIView):
     """
     API view to log in a user and return an authentication token.
     """
+
     permission_classes = (AllowAny,)
     authentication_classes = (TokenAuthentication,)
 
@@ -48,7 +51,9 @@ class LoginView(APIView):
         user = authenticate(username=username, password=password)
 
         if user:
-            token, _ = Token.objects.get_or_create(user=user) 
-            return Response({"token": token.key})  
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key})
         else:
-            return Response({"error": "Invalid credentials"}, status=401)  
+            return Response(
+                {"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED
+            )
